@@ -1,0 +1,34 @@
+{
+    "name": "redde/php-api-sdk",
+    "description": "Redde API wrapper",
+    "type": "library",
+    "keywords": ["online payment","payment integration","wigal","wigal solutions", "mobile money"],
+    "homepage": "https://www.reddeonline.com/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Oteng Kwame Appiah-Nti",
+            "email": "koteng@wigalsolutions.com",
+            "role": "Software Engineer"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Redde\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Redde\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable"
+}
