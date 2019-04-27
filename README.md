@@ -1,5 +1,4 @@
 [![GitHub version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=gh&type=6&v=1.0&x2=0)](https://packagist.org/packages/redde/php-api-sdk)
-[![Latest Stable Version](https://packagist.org/packages/redde/php-api-sdk)](https://packagist.org/packages/redde/php-api-sdk)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)]()
 [![made-with-php](https://img.shields.io/badge/Made%20with-PHP-1f425f.svg)](https://www.php.net/)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/wigalsolutionsltd/redde-php-sdk/)
