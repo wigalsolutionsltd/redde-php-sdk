@@ -17,9 +17,11 @@ use Redde\ReddeApi;
 $apikey = $config['apikey'];
 $app_id = $config['appid'];
 
-$pay = new ReddeApi($apikey, $app_id);
+$api = new ReddeApi($apikey, $app_id);
 
-//You need to get this from your application
+/* Note that the clienttransid and clientreference is generated 
+  by the developer. The nickname is your identity name eg. Wigal
+*/
 $client_reference = generateNumber();
 $client_id = generateRandomString();
 
@@ -41,4 +43,4 @@ $params = [
 * return a response which you can save
 * in any storage of your choice
 */
-$pay->receiveMoney($params);
+$api->receiveMoney($params);
