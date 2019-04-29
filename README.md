@@ -81,7 +81,7 @@ $api = new ReddeApi($apikey, $app_id);
 
 /* Note that the clienttransid and clientreference is generated 
   by the developer. The nickname is your identity name eg. Wigal
-*/l
+*/
 
 $params = [
     "amount" => 1, //amount to receive
@@ -104,7 +104,7 @@ $params = [
 $api->receiveMoney($params);
 
 ```
--------------
+
 
 ### Sending money to Customer or Client
 To use the API to send money to a customer, the sendMoney() method will be used
@@ -158,7 +158,7 @@ $params = [
 $api->sendMoney($params);
 
 ```
---------
+
 
 ### Callbacks
 Most APIs implement callbacks for easy tracking of api transactions so we've spun something
