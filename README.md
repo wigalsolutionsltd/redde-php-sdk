@@ -1,12 +1,15 @@
-![Redde](https://www.reddeonline.com/assets/img/reddes-logo.png)
-# Redde-php-sdk
-A PHP SDK built around the Redde REST API that allows merchants to receive, send, check transaction status, and perform lots of payment transactions.
+[//]: #![Redde](https://www.reddeonline.com/assets/img/redde-logo.png)
+
+<img src="https://www.reddeonline.com/assets/img/redde-logo.png" data-canonical-src="https://www.reddeonline.com/assets/img/redde-logo.png" width="200" height="80" />
 
 [![GitHub version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=gh&type=6&v=1.0&x2=0)](https://packagist.org/packages/redde/php-api-sdk)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)]()
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/wigalsolutionsltd/redde-php-sdk)
 [![made-with-php](https://img.shields.io/badge/Made%20with-PHP-1f425f.svg)](https://www.php.net/)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/wigalsolutionsltd/redde-php-sdk/)
-[![ForTheBadge built-by-developers](http://ForTheBadge.com/images/badges/built-by-developers.svg)](https://reddeonline.com)
+[![ForTheBadge built-by-developers](http://ForTheBadge.com/images/badges/built-by-developers.svg)](https://www.reddeonline.com/)
+---------------------------------------------------------------------------
+# Redde-php-sdk
+A PHP SDK built around the Redde REST API that allows merchants to receive, send, check transaction status, and perform lots of payment transactions.
 
 Before you can have access to APIs you need to register and create an [Account](https://app.reddeonline.com/register). Header for all request should have {"apikey": "string"}: and this API key will be sent to merchant when their app configuration is setup for them by Wigal.
 
