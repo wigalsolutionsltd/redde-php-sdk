@@ -29,6 +29,5 @@
         "psr-4": {
             "Redde\\Tests\\": "tests/"
         }
-    },
-    "minimum-stability": "stable"
+    }
 }
