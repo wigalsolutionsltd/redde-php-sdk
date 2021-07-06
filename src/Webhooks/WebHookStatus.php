@@ -1,8 +1,6 @@
 <?php
-namespace Redde\Webhooks;
 
-use Redde\Exceptions\ReddeApiException;
-use Redde\Exceptions\ReddeException;
+namespace Redde\Webhooks;
 
 /**
 * A simple class to handle callbacks
@@ -16,8 +14,8 @@ class WebHookStatus
 
 	/**
 	* Get Response from API server
-	* @return mixed API response
-	* @return string [This response is from api server]
+	*  [This response is from api server]
+	* @return string API response
 	*/
 	public function getResponse()
 	{
@@ -26,8 +24,8 @@ class WebHookStatus
 
 	/**
 	 * Set response details from API server
-	 * @param  json $response [Response from the api server]
-	 * @return json [This response is retrieve using the getResponse function]
+	 * @param object $response [Response from the api server]
+	 * [This response is retrieved using the getResponse function]
 	 */
 	public function setResponse($response)
 	{
@@ -37,23 +35,24 @@ class WebHookStatus
 
 	/**
 	 * Here we are using file_get_contents to get http response
-	 * @return json 
+	 * @return string 
 	 */
 	public function getRawResponse()
 	{
 		$data = @file_get_contents('php://input');
-		$params = $this->setResponse($data);
+		$this->setResponse($data);
 		return $this->getResponse();
 	}
 
 	/**
 	 * The callback function prepares and retrieve 
-	 * final status of api call
-	 * @return json 
+	 * response as object of final api call
+	 * @return object 
 	 */
 	public function callback()
 	{	
-		return json_decode($this->getRawResponse());
+		$this->getRawResponse();
+		return json_decode($this->response);
 	}
-
+	
 }
