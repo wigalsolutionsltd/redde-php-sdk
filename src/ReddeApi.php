@@ -16,7 +16,7 @@ class ReddeApi
      */
     private $apikey = '';
     
-    private $app_id = '';
+    private $appid = '';
 
     private $lastResponseRaw;
 
@@ -24,7 +24,7 @@ class ReddeApi
 
     public $url = 'https://api.reddeonline.com/v1/';
 
-    const USER_AGENT = 'Redde PHP API SDK 1.0';
+    const USER_AGENT = 'Redde PHP API SDK 1.2';
 
     /**
      * Maximum amount of time in seconds that is allowed to make the connection to the API server
@@ -39,13 +39,15 @@ class ReddeApi
     public $curlTimeout = 20;
 
     /**
-     * @param string $apikey Redde Store API key
-     * @throws \Redde\Exceptions\ReddeException if the library failed to initialize
+     * ReddeApi construct
+     *
+     * @param string $apikey Redde API key
+     * @param string $appid Redd App ID
      */
-    public function __construct($apikey, $app_id)
+    public function __construct($apikey, $appid)
     {
         $this->apikey = $apikey;
-        $this->app_id = $app_id;
+        $this->appid = $appid;
     }
  	
 	/**
@@ -55,7 +57,7 @@ class ReddeApi
 	*/
     protected function getBaseUrl()
     {
-    	return $this->setBaseUrl();    
+    	return $this->setBaseUrl($this->url);    
     }
 	
     /**
@@ -141,7 +143,7 @@ class ReddeApi
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
                 'Content-Type: application/json',
                 'apikey: ' . $this->apikey,
-                'appid: ' . $this->app_id,
+                'appid: ' . $this->appid,
         ]);
         
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
@@ -193,7 +195,6 @@ class ReddeApi
      */
     public function receiveMoney($params)
     {
-        //$this->api = new ReddeApi($this->apikey, $this->app_id);
 		try {
             // Receive payment from Customer
             $transaction = $this->post('receive', $params);
@@ -222,6 +223,118 @@ class ReddeApi
             $transaction = $this->post('cashout', $params);
             echo $transaction;
 
+        } catch (ReddeApiException $e) { 
+            //API response status code was not successful
+            echo 'Redde API Exception: ' . $e->getCode() . ' ' . $e->getMessage();
+        } catch (ReddeException $e) { 
+            //API call failed
+            echo 'Redde Exception: ' . $e->getMessage();
+            echo $this->getLastResponseRaw();
+        }
+    }
+
+    /**
+     * Perform a status request to the API
+     * To check the status of a transaction api initiated through sendMoney or receiveMoney
+     * @param $transaction_id int|string
+     * @return mixed API response
+     * @throws \Redde\Exceptions\ReddeApiException If the API call status code is not in the 2xx range
+     * @throws ReddeException If the API call has failed or the response is invalid
+     */
+    public function transactionStatus($transaction_id)
+    {
+
+        $status_id = $transaction_id; //use the exact transaction_id here
+
+        try {
+            // Checkout Status from Customer
+            $status = $this->get('status/' . $status_id);
+            echo $status;
+        } catch (ReddeApiException $e) { 
+            // API response status code was not successful
+            echo 'Redde API Exception: ' . $e->getCode() . ' ' . $e->getMessage();
+        } catch (ReddeException $e) { 
+            // API call failed
+            echo 'Redde Exception: ' . $e->getMessage();
+            echo $this->getLastResponseRaw();
+        }
+    }
+
+    /**
+     * Perform a checkout request to the API
+     * To receive money from customer through Checkout
+     * @param array $checkout_params
+     * @return mixed API response
+     * 
+     * If the API call status code is not in the 2xx range 
+     * and API call fails it will return to failure callback url
+     */
+    public function checkOut($checkout_params) {
+
+        $checkouturl = '';
+
+        try {
+
+            // Checkout from Customer
+            $transaction = $this->post('checkout', $checkout_params);
+            $transaction = json_decode($transaction);
+            $checkouturl = $transaction->checkouturl;
+
+            if (
+                defined('LARAVEL_START') 
+                && function_exists('redirect')
+            ) {
+
+                return @redirect()->to($checkouturl);
+            } 
+
+            header("Location: " . $checkouturl);
+
+        } catch (ReddeApiException $e) { 
+            
+            // API response status code was not successful
+            if (
+                defined('LARAVEL_START') 
+                && function_exists('redirect')
+            ) {
+                return @redirect()->to($checkout_params['failurecallback']);
+            } else {
+                // die(var_dump($e));
+                // echo 'Redde API Exception: ' . $e->getCode() . ' ' . $e->getMessage();
+                header("Location: " . $checkout_params['failurecallback']);
+            }
+        } catch (ReddeException $e) { 
+
+            // API call failed
+            if (
+                defined('LARAVEL_START') 
+                && function_exists('redirect')
+            ) {
+                // die(var_dump($e));
+                return @redirect()->to($checkout_params['failurecallback']);
+            } else {
+                header("Location: " . $checkout_params['failurecallback']);
+            }
+        }
+    }
+
+    /**
+     * Perform a checkout status request to the API
+     * To check the status of a checkout api initiated through Checkout
+     * @param $transaction_id int|string
+     * @return mixed API response
+     * @throws \Redde\Exceptions\ReddeApiException If the API call status code is not in the 2xx range
+     * @throws ReddeException If the API call has failed or the response is invalid
+     */
+    public function checkoutStatus($transaction_id)
+    {
+
+        $checkout_status_id = $transaction_id; //use the exact transaction_id here
+
+        try {
+            // Checkout Status from Customer
+            $status = $this->get('checkoutstatus/' . $checkout_status_id);
+            echo $status;
         } catch (ReddeApiException $e) { 
             //API response status code was not successful
             echo 'Redde API Exception: ' . $e->getCode() . ' ' . $e->getMessage();

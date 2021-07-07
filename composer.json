@@ -2,13 +2,13 @@
     "name": "redde/php-api-sdk",
     "description": "Redde API wrapper",
     "type": "library",
-    "keywords": ["online payment","payment integration","wigal","wigal solutions", "mobile money"],
+    "keywords": ["online payment","payment integration","wigal","wigal solutions", "mobile money", "card payments"],
     "homepage": "https://www.reddeonline.com/",
     "license": "MIT",
     "authors": [
         {
             "name": "Oteng Kwame Appiah-Nti",
-            "email": "koteng@wigalsolutions.com",
+            "email": "koteng@wigal.com.gh",
             "role": "Software Engineer"
         }
     ],
